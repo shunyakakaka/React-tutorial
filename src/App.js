@@ -3,10 +3,9 @@ import './App.css';
 import React, { useState } from 'react';
 
 function Square(props) {
-  const [value, setValue] = useState(null)
   return (
-    <button className="square" onClick={() => setValue("X")}>
-      {value || props.value}
+    <button className="square" onClick={props.onClick}>
+      {props.value}
     </button>
   )
 }
@@ -14,27 +13,35 @@ function Square(props) {
 function Board() {
   const status = "Next player: X"
   const [squares, setSquares] = useState(new Array(9).fill(null))
+  const [xIsNext, setXIsNext] = useState(true)
+
+  function hundleClick(i) {
+    const changedSquares = squares.slice();
+    changedSquares[i] = xIsNext ? "X" : "O"
+    setXIsNext(!xIsNext)
+    setSquares(changedSquares)
+  }
 
   function renderSquare(num) {
-    return <Square value={num}></Square>
+    return <Square value={squares[num]} onClick={() => hundleClick(num)}></Square>
   }
   return (
     <div>
       <div className="status">{status}</div>
       <div className="board-row">
-        {renderSquare("O")}
-        {renderSquare("O")}
-        {renderSquare("O")}
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
       <div className="board-row">
-        {renderSquare("O")}
-        {renderSquare("O")}
-        {renderSquare("O")}
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
       </div>
       <div className="board-row">
-        {renderSquare("O")}
-        {renderSquare("O")}
-        {renderSquare("O")}
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
       </div>
     </div>
   )
