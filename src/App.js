@@ -11,13 +11,14 @@ function Square(props) {
 }
 
 function Board() {
-  const status = "Next player: X"
   const [squares, setSquares] = useState(new Array(9).fill(null))
   const [xIsNext, setXIsNext] = useState(true)
+  const status = `Next player: ${xIsNext ? "X" : "O"}`
 
   function hundleClick(i) {
     const changedSquares = squares.slice();
     changedSquares[i] = xIsNext ? "X" : "O"
+
     setXIsNext(!xIsNext)
     setSquares(changedSquares)
   }
