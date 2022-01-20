@@ -13,10 +13,19 @@ function Square(props) {
 function Board() {
   const [squares, setSquares] = useState(new Array(9).fill(null))
   const [xIsNext, setXIsNext] = useState(true)
-  const status = `Next player: ${xIsNext ? "X" : "O"}`
+  const winner = calculateWinner(squares)
+  let status;
+  if (winner) {
+    status = `Winner: ${status}`
+  } else {
+    status = `Next player: ${xIsNext ? "X" : "O"}`
+  }
 
   function hundleClick(i) {
     const changedSquares = squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return
+    }
     changedSquares[i] = xIsNext ? "X" : "O"
 
     setXIsNext(!xIsNext)
@@ -26,6 +35,7 @@ function Board() {
   function renderSquare(num) {
     return <Square value={squares[num]} onClick={() => hundleClick(num)}></Square>
   }
+
   return (
     <div>
       <div className="status">{status}</div>
